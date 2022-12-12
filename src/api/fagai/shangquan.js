@@ -8,6 +8,14 @@ export function getHuji(url,params){
     })
 }
 
+export function getSqById(url,params){
+    return request({
+        url,
+        method:'get',
+        params,
+    })
+}
+
 
 
 

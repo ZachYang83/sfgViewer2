@@ -1,14 +1,23 @@
 <template>
   <div id="map">
+    <div class="search">
+      <el-cascader
+        placeholder="搜索工业园"
+        :options="options"
+        filterable
+        clearable
+        @change="regionOptionChange"
+      ></el-cascader>
+    </div>
     <Legend
       :title="title"
       :items="items"
       style="bottom: 20px; left: 10px; width: 200px; height: auto"
     >
     </Legend>
-    <div class="timeLine">
+    <!-- <div class="timeLine">
       <Timeline @changeData="changeLayer"></Timeline>
-    </div>
+    </div> -->
     <div class="dataPan" v-show="showData" v-bind:class="{ active: showData }">
       <div class="item changzhu">
         <div class="title">
@@ -48,6 +57,7 @@
 import Legend from "components/common/Legend.vue";
 import Timeline from "./Timeline.vue";
 import { init_map } from "utils/initMap.js";
+import gongyeyuan from "./option.js";
 import {
   add_tms,
   add_wms,
@@ -55,7 +65,7 @@ import {
   addgeojson_L,
 } from "utils/loadLayer.js";
 import { removeLayers } from "utils/removeLayers.js";
-import { getHuji } from "api/fagai/industry.js";
+import { getHuji, getGyyById } from "api/fagai/industry.js";
 import gyy_hj from "../gongyeyuan/dataPan/Huji.vue";
 import gyy_pop from "@/views/fagai/gongyeyuan/dataPan/Chart.vue";
 import mapboxgl from "mapbox-gl";
@@ -108,6 +118,7 @@ export default {
         name: "广州-天河·公园智谷片区",
         id: 142,
       },
+      options: gongyeyuan,
     };
   },
   components: {
@@ -169,74 +180,74 @@ export default {
     },
     loadWMS() {
       MAP.on("load", function () {
-      MAP.addSource("sfg_gongyeyuan", {
-        type: "vector",
-        scheme: "tms",
-        tiles: [
-          "https://zwfw.credit.gdgov.cn/geoserver/gwc/service/tms/1.0.0/gpzi%3Asfg_gongyeyuan@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf",
-        ],
-      });
-      MAP.addLayer({
-        id: "sfg_gongyeyuan",
-        source: "sfg_gongyeyuan",
-        "source-layer": "sfg_gongyeyuan",
-        type: "fill",
-        paint: {
-          "fill-outline-color": "#455a64",
-          "fill-color": [
-            "case",
-            ["<", ["get", "work1"], 20000],
-            "RGBA(225,225,225,0.7)",
-            ["<", ["get", "work1"], 50000],
-            "RGBA(224,250,242,0.7)",
-            ["<", ["get", "work1"], 100000],
-            "RGBA(220,240,229,0.7)",
-            ["<", ["get", "work1"], 200000],
-            "RGBA(132,196,214,0.7)",
-            ["<", ["get", "work1"], 500000],
-            "RGBA(50,107,171,0.7)",
-            "RGBA(6,51,154,0.7)",
+        MAP.addSource("sfg_gongyeyuan", {
+          type: "vector",
+          scheme: "tms",
+          tiles: [
+            "https://zwfw.credit.gdgov.cn/geoserver/gwc/service/tms/1.0.0/gpzi%3Asfg_gongyeyuan@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf",
           ],
-        },
+        });
+        MAP.addLayer({
+          id: "sfg_gongyeyuan",
+          source: "sfg_gongyeyuan",
+          "source-layer": "sfg_gongyeyuan",
+          type: "fill",
+          paint: {
+            "fill-outline-color": "#455a64",
+            "fill-color": [
+              "case",
+              ["<", ["get", "work1"], 20000],
+              "RGBA(225,225,225,0.7)",
+              ["<", ["get", "work1"], 50000],
+              "RGBA(224,250,242,0.7)",
+              ["<", ["get", "work1"], 100000],
+              "RGBA(220,240,229,0.7)",
+              ["<", ["get", "work1"], 200000],
+              "RGBA(132,196,214,0.7)",
+              ["<", ["get", "work1"], 500000],
+              "RGBA(50,107,171,0.7)",
+              "RGBA(6,51,154,0.7)",
+            ],
+          },
+        });
+        MAP.addLayer({
+          id: "sfg_gongyeyuan_sym",
+          source: "sfg_gongyeyuan",
+          "source-layer": "sfg_gongyeyuan",
+          type: "symbol",
+          layout: {
+            "icon-image": "",
+            "text-field": "{Name}\n{work1}", //此属性为需要显示的字段
+            "text-size": 12,
+            "text-anchor": "top",
+          },
+          paint: {
+            "text-color": "#ffffff",
+          },
+        });
+        MAP.addLayer({
+          id: "sfg_gongyeyuan-line",
+          type: "line",
+          source: "sfg_gongyeyuan",
+          "source-layer": "sfg_gongyeyuan",
+          paint: {
+            "line-color": "#ff4081",
+            "line-width": 1,
+          },
+        });
+        MAP.addLayer({
+          id: "sfg_gongyeyuan-hl",
+          type: "line",
+          source: "sfg_gongyeyuan",
+          "source-layer": "sfg_gongyeyuan",
+          paint: {
+            "line-color": "#18ffff",
+            "line-width": 3,
+            // "text-color": "#ffff00",
+          },
+          filter: ["in", "Name", ""],
+        });
       });
-      MAP.addLayer({
-        id: "sfg_gongyeyuan_sym",
-        source: "sfg_gongyeyuan",
-        "source-layer": "sfg_gongyeyuan",
-        type: "symbol",
-        layout: {
-          "icon-image": "",
-          "text-field": "{Name}\n{work1}", //此属性为需要显示的字段
-          "text-size": 12,
-          "text-anchor": "top",
-        },
-         paint: {
-          "text-color": "#ffffff",
-        },
-      });
-      MAP.addLayer({
-        id: "sfg_gongyeyuan-line",
-        type: "line",
-        source: "sfg_gongyeyuan",
-        "source-layer": "sfg_gongyeyuan",
-        paint: {
-          "line-color": "#ff4081",
-          "line-width": 1,
-        },
-      });
-      MAP.addLayer({
-        id: "sfg_gongyeyuan-hl",
-        type: "line",
-        source: "sfg_gongyeyuan",
-        "source-layer": "sfg_gongyeyuan",
-        paint: {
-          "line-color": "#18ffff",
-          "line-width": 3,
-          // "text-color": "#ffff00",
-        },
-        filter: ["in", "Name", ""],
-      });
-      })
     },
     changeLayer(index) {
       var field;
@@ -342,7 +353,7 @@ export default {
     getInfo(e) {
       let _this = this;
       var features = MAP.queryRenderedFeatures(e.point);
-      if (features[0].layer.id == "sfg_gongyeyuan") {
+      if (features[0].layer.id == "sfg_gyy") {
         var props = features[0].properties;
         workData = [
           props["work1"],
@@ -368,11 +379,11 @@ export default {
           props["flow9"],
           props["flow10"],
         ];
-        MAP.setFilter("sfg_gongyeyuan-hl", [
-          "in",
-          "id",
-          features[0].properties.id,
-        ]);
+        // MAP.setFilter("sfg_gongyeyuan-hl", [
+        //   "in",
+        //   "id",
+        //   features[0].properties.id,
+        // ]);
       }
       _this.layerProp = {
         id: props.id,
@@ -399,6 +410,41 @@ export default {
       this.timeIndex = index;
       this.getData();
     },
+    regionOptionChange(e) {
+      let _this = this;
+      let gyyId = e[1];
+      getGyyById("/shengfagai/industry/getGyyById", {
+        id: parseInt(gyyId),
+      }).then((res) => {
+        let gyyData = res.data.data;
+        console.log(gyyData,'dfafasfasdfas');
+        let point_center = [gyyData['lon'],gyyData['lat']];
+        let geojson = gyyData["geojson"];
+        if (MAP.getLayer("sfg_gyy")) {
+          MAP.removeLayer("sfg_gyy");
+          MAP.removeSource("sfg_gyy");
+        }
+        MAP.addSource("sfg_gyy", {
+          type: "geojson",
+          data: JSON.parse(geojson),
+        });
+        MAP.addLayer({
+          id: "sfg_gyy",
+          type: "line",
+          source: "sfg_gyy",
+          paint: {
+            "line-color": "#18ffff",
+            "line-width": 3,
+          },
+        });
+        MAP.flyTo({
+          center:point_center,
+          zoom:11,
+        })
+        _this.getInfo();
+      });
+      // });
+    },
   },
   destroyed() {
     let _this = this;
@@ -419,6 +465,16 @@ export default {
   height: 100%;
   // height:calc(100% - 80px);
 }
+
+.search {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 200px;
+  // height: 100px;
+  z-index: 9999;
+}
+
 .legend {
   width: 100%;
   height: calc(100% - 40px);
@@ -485,7 +541,7 @@ export default {
   transition: width 0.25s;
   z-index: 999;
   &.active {
-    width: 400px;
+    width: 500px;
   }
 
   .item {

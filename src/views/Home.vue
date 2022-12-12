@@ -2,7 +2,7 @@
   <div class="base-page">
     <!-- <div class="head"><Header></Header></div> -->
     <div class="container">
-      <div class="sidebar" :class="{ fold: isFold }">
+      <div class="sidebar" :class="{ fold: isFold }" v-show="this.$route.meta.show">
         <LeftMenu></LeftMenu>
         <!-- <span class="fold-button" @click="foldClick">
           <i class="el-icon-arrow-right" :class="{ right: isFold }"></i>
@@ -73,18 +73,22 @@ export default {
 .sidebar {
   z-index: 999;
   width: 200px;
-  height: 100%;
-  display: inline-block;
-  background: url("~assets/menu-bg.png") no-repeat rgba(0, 18, 37, 0.9);
-  background-size: 100% 100%;
-  position: relative;
+  height: 20%;
+  display: block;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.3);
+  // background: url("~assets/menu-bg.png") no-repeat rgba(0, 18, 37, 0.9);
+  // background-size: 100% 100%;
+  position: absolute;
+  top:10px;
+  left:10px;
   &.fold {
     width: 0;
   }
 }
 
 .mapbox {
-  display: inline-block;
+  // display: block;
   width: 100%;
   height: 100%;
 }

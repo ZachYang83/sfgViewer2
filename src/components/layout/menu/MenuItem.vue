@@ -9,7 +9,7 @@
     </router-link>
 
     <!-- 可展开菜单 -->
-    <el-submenu :index="resolvePath()" v-else>
+    <el-submenu :index="resolvePath()" v-else v-show="item.meta.show">
       <template slot="title">
         <i :class="item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>

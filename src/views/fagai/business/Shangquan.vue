@@ -1,14 +1,23 @@
 <template>
   <div id="map">
+    <div class="search">
+      <el-cascader
+        placeholder="搜索商圈"
+        :options="options"
+        filterable
+        clearable
+        @change="regionOptionChange"
+      ></el-cascader>
+    </div>
     <Legend
       :title="title"
       :items="items"
       style="bottom: 20px; left: 10px; width: 200px; height: auto"
     >
     </Legend>
-    <div class="timeLine" @changeData="changeData">
+    <!-- <div class="timeLine" @changeData="changeData">
       <Timeline @changeData="changeLayer"></Timeline>
-    </div>
+    </div> -->
     <div class="dataPan" v-show="showData" v-bind:class="{ active: showData }">
       <div class="item changzhu">
         <div class="title">
@@ -48,6 +57,7 @@
 import Legend from "components/common/Legend.vue";
 import Timeline from "./Timeline.vue";
 import { init_map } from "utils/initMap.js";
+import shangquan from "./option.js";
 import {
   add_tms,
   add_wms,
@@ -55,7 +65,7 @@ import {
   addgeojson_L,
 } from "utils/loadLayer.js";
 import { removeLayers } from "utils/removeLayers.js";
-import { getHuji } from "api/fagai/shangquan.js";
+import { getHuji, getSqById } from "api/fagai/shangquan.js";
 import gyy_hj from "../business/dataPan/Huji.vue";
 import gyy_pop from "@/views/fagai/business/dataPan/Chart.vue";
 import mapboxgl from "mapbox-gl";
@@ -110,6 +120,7 @@ export default {
         name: "天河城",
         busId: 356,
       },
+      options: shangquan,
     };
   },
   components: {
@@ -343,7 +354,7 @@ export default {
     getInfo(e) {
       let _this = this;
       var features = MAP.queryRenderedFeatures(e.point);
-      if (features[0].layer.id == "sfg_shangquan") {
+      if (features[0].layer.id == "sfg_sq") {
         var props = features[0].properties;
         workData = [
           props["mon1"],
@@ -357,11 +368,11 @@ export default {
           props["mon9"],
           props["mon10"],
         ];
-        MAP.setFilter("sfg_shangquan-hl", [
-          "in",
-          "id",
-          features[0].properties.id,
-        ]);
+        // MAP.setFilter("sfg_shangquan-hl", [
+        //   "in",
+        //   "id",
+        //   features[0].properties.id,
+        // ]);
       }
       _this.layerProp = {
         busId: props.id,
@@ -387,6 +398,43 @@ export default {
       this.timeIndex = index;
       this.getData();
     },
+    regionOptionChange(e) {
+      console.log(e,'eeeeeeeeeee');
+      let _this = this;
+      let sqId = e[1];
+      getSqById("/shengfagai/shangquan/getSqById", {
+        id: parseInt(sqId),
+      }).then((res) => {
+        console.log(res,'res');
+        let sqData = res.data.data;
+        console.log(sqData, "sqData");
+        let point_center = [sqData["lon"], sqData["lat"]];
+        let geojson = sqData["geojson"];
+        if (MAP.getLayer("sfg_sq")) {
+          MAP.removeLayer("sfg_sq");
+          MAP.removeSource("sfg_sq");
+        }
+        MAP.addSource("sfg_sq", {
+          type: "geojson",
+          data: JSON.parse(geojson),
+        });
+        MAP.addLayer({
+          id: "sfg_sq",
+          type: "line",
+          source: "sfg_sq",
+          paint: {
+            "line-color": "#18ffff",
+            "line-width": 3,
+          },
+        });
+        MAP.flyTo({
+          center: point_center,
+          zoom: 13,
+        });
+        _this.getInfo();
+      });
+      // });
+    },
   },
   destroyed() {
     let _this = this;
@@ -407,6 +455,16 @@ export default {
   height: 100%;
   // height:calc(100% - 80px);
 }
+
+.search {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 200px;
+  // height: 100px;
+  z-index: 9999;
+}
+
 .legend {
   width: 100%;
   height: calc(100% - 40px);

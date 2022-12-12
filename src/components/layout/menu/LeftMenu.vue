@@ -44,10 +44,9 @@ export default {
 <style lang="scss" scoped>
 .leftMenu {
   width: 100%;
-  // height: 100%;
-  height: calc(100% - 80px);
+  height: 100%;
   // background-color:rgba(0, 25, 46, 0);
-  // background: rgba(0, 25, 46, 0);
+  background: rgba(0, 25, 46, 0);
   position: absolute;
   left: 0px;
   z-index: 999;

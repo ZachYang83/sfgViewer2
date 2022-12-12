@@ -17,4 +17,13 @@ export function getChart(url,params){
     })
 }
 
+export function getGyyById(url,params){
+    return request({
+        url,
+        method:'get',
+        params,
+    })
+}
+
+
 

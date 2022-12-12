@@ -9,8 +9,8 @@ const routes = [
   {
     path: '/',
     name: 'Default',
-    redirect: '/resident',
-    component:()=>import('@/views/fagai/resident/Permanent.vue'),
+    redirect: '/shangquan',
+    component:()=>import('@/views/fagai/business/Shangquan.vue'),
   },
   {
     path: '/login',
@@ -34,28 +34,33 @@ const routes = [
       //   children:[
           {
             path:'/resident',
-            meta: { title: "常驻人口", icon: "el-icon-position" },
+            meta: { title: "常驻人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/resident/Permanent.vue'),
           },
           {
             path:'/inflow',
-            meta: { title: "流入人口", icon: "el-icon-position" },
+            meta: { title: "流入人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/inflow/Liudong.vue'),
           },
           {
             path:'/outflow',
-            meta: { title: "流出人口", icon: "el-icon-position" },
+            meta: { title: "流出人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/outflow/Liudong.vue'),
           },
           {
             path:'/industry',
-            meta: { title: "工业园人流", icon: "el-icon-position" },
+            meta: { title: "工业园人流", icon: "el-icon-position" ,show:false},
             component:()=>import('@/views/fagai/gongyeyuan/Industry.vue'),
           },
           {
             path:'/shangquan',
-            meta: { title: "商圈客流", icon: "el-icon-position" },
+            meta: { title: "商圈客流", icon: "el-icon-position" ,show:false},
             component:()=>import('@/views/fagai/business/Shangquan.vue'),
+          },
+          {
+            path:'/huoyun',
+            meta: { title: "货运", icon: "el-icon-position" ,show:false},
+            component:()=>import('@/views/fagai/huoyun/index.vue'),
           },
       //   ]
       // },
