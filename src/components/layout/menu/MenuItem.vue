@@ -1,28 +1,14 @@
 <template>
   <div class="menu">
     <!-- 根菜单 -->
-    <router-link tag="span" :to="resolvePath()" v-if="!item.children">
+    <router-link tag="span" :to="resolvePath()" v-if="item.meta.show">
       <el-menu-item :index="resolvePath()">
-        <i :class="item.meta.icon"></i>
-        <span slot="title">{{ item.meta.title }}</span>
+          <i :class="item.meta.icon"></i>
+          <span slot="title">{{ item.meta.title }}</span>
       </el-menu-item>
     </router-link>
 
-    <!-- 可展开菜单 -->
-    <el-submenu :index="resolvePath()" v-else v-show="item.meta.show">
-      <template slot="title">
-        <i :class="item.meta.icon"></i>
-        <span slot="title">{{ item.meta.title }}</span>
-      </template>
-      <!-- 这里递归去展示多级菜单 -->
-      <menu-item
-        v-for="(route, index) in item.children"
-        :key="index"
-        :item="route"
-        :fatherPath="resolvePath(route.path)"
-      >
-      </menu-item>
-    </el-submenu>
+ 
   </div>
 </template>
 
@@ -57,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-.menu .el-menu-item{
+.menu .el-menu-item {
   padding-left: 30px !important;
   display: -webkit-box !important;
   overflow: hidden !important; /*超出隐藏*/
@@ -65,7 +51,7 @@ export default {
   font-size: 10px !important;
 }
 
-.menu i{
-    padding-right:10px !important;
-  }
+.menu i {
+  padding-right: 10px !important;
+}
 </style>
