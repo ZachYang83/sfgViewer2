@@ -1,6 +1,7 @@
 <template>
   <div class="menu">
     <!-- 根菜单 -->
+<<<<<<< HEAD
     <router-link tag="span" :to="resolvePath()" v-if="!item.children">
       <el-menu-item :index="resolvePath()" v-show="item.meta.show">
         <i :class="item.meta.icon"></i>
@@ -9,6 +10,16 @@
     </router-link>
 
     <!-- 可展开菜单 -->
+=======
+    <router-link tag="span" :to="resolvePath()" v-if="item.meta.show">
+      <el-menu-item :index="resolvePath()">
+          <i :class="item.meta.icon"></i>
+          <span slot="title">{{ item.meta.title }}</span>
+      </el-menu-item>
+    </router-link>
+
+ 
+>>>>>>> c59e3e5dc910931722fee0fe33e0a6fc6948663f
   </div>
 </template>
 
@@ -43,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss">
-.menu .el-menu-item{
+.menu .el-menu-item {
   padding-left: 30px !important;
   display: -webkit-box !important;
   overflow: hidden !important; /*超出隐藏*/
@@ -51,7 +62,7 @@ export default {
   font-size: 10px !important;
 }
 
-.menu i{
-    padding-right:10px !important;
-  }
+.menu i {
+  padding-right: 10px !important;
+}
 </style>

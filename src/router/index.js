@@ -11,6 +11,8 @@ const routes = [
     name: 'Default',
     redirect: '/huoyun',
     component:()=>import('@/views/fagai/huoyun/index.vue'),
+    redirect: '/resident',
+    component:()=>import('@/views/fagai/resident/Permanent.vue'),
   },
   {
     path: '/login',
