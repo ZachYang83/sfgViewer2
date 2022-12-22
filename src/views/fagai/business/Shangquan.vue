@@ -15,9 +15,9 @@
       style="bottom: 20px; left: 10px; width: 200px; height: auto"
     >
     </Legend>
-    <!-- <div class="timeLine" @changeData="changeData">
+    <div class="timeLine" @changeData="changeData">
       <Timeline @changeData="changeLayer"></Timeline>
-    </div> -->
+    </div>
     <div class="dataPan" v-show="showData" v-bind:class="{ active: showData }">
       <div class="item changzhu">
         <div class="title">
@@ -186,6 +186,7 @@ export default {
           type: "vector",
           scheme: "tms",
           tiles: [
+            // "http://8.134.70.156:8181/geoserver/gwc/service/tms/1.0.0/gpzi%3Asfg_shangquan@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf",
             "https://zwfw.credit.gdgov.cn/geoserver/gwc/service/tms/1.0.0/gpzi%3Asfg_shangquan@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf",
           ],
         });
@@ -354,7 +355,7 @@ export default {
     getInfo(e) {
       let _this = this;
       var features = MAP.queryRenderedFeatures(e.point);
-      if (features[0].layer.id == "sfg_sq") {
+      if (features[0].layer.id == "sfg_shangquan") {
         var props = features[0].properties;
         workData = [
           props["mon1"],
@@ -368,11 +369,11 @@ export default {
           props["mon9"],
           props["mon10"],
         ];
-        // MAP.setFilter("sfg_shangquan-hl", [
-        //   "in",
-        //   "id",
-        //   features[0].properties.id,
-        // ]);
+        MAP.setFilter("sfg_shangquan-hl", [
+          "in",
+          "id",
+          features[0].properties.id,
+        ]);
       }
       _this.layerProp = {
         busId: props.id,

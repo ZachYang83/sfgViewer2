@@ -15,9 +15,9 @@
       style="bottom: 20px; left: 10px; width: 200px; height: auto"
     >
     </Legend>
-    <!-- <div class="timeLine">
+    <div class="timeLine">
       <Timeline @changeData="changeLayer"></Timeline>
-    </div> -->
+    </div>
     <div class="dataPan" v-show="showData" v-bind:class="{ active: showData }">
       <div class="item changzhu">
         <div class="title">
@@ -185,6 +185,7 @@ export default {
           scheme: "tms",
           tiles: [
             "https://zwfw.credit.gdgov.cn/geoserver/gwc/service/tms/1.0.0/gpzi%3Asfg_gongyeyuan@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf",
+            // "http://8.134.70.156:8181/geoserver/gwc/service/tms/1.0.0/gpzi%3Asfg_gongyeyuan@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf",
           ],
         });
         MAP.addLayer({
@@ -353,7 +354,7 @@ export default {
     getInfo(e) {
       let _this = this;
       var features = MAP.queryRenderedFeatures(e.point);
-      if (features[0].layer.id == "sfg_gyy") {
+      if (features[0].layer.id == "sfg_gongyeyuan") {
         var props = features[0].properties;
         workData = [
           props["work1"],
@@ -379,11 +380,11 @@ export default {
           props["flow9"],
           props["flow10"],
         ];
-        // MAP.setFilter("sfg_gongyeyuan-hl", [
-        //   "in",
-        //   "id",
-        //   features[0].properties.id,
-        // ]);
+        MAP.setFilter("sfg_gongyeyuan-hl", [
+          "in",
+          "id",
+          features[0].properties.id,
+        ]);
       }
       _this.layerProp = {
         id: props.id,
@@ -417,7 +418,6 @@ export default {
         id: parseInt(gyyId),
       }).then((res) => {
         let gyyData = res.data.data;
-        console.log(gyyData,'dfafasfasdfas');
         let point_center = [gyyData['lon'],gyyData['lat']];
         let geojson = gyyData["geojson"];
         if (MAP.getLayer("sfg_gyy")) {
@@ -541,7 +541,7 @@ export default {
   transition: width 0.25s;
   z-index: 999;
   &.active {
-    width: 500px;
+    width: 400px;
   }
 
   .item {

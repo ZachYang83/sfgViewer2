@@ -12,7 +12,7 @@
     <div class="dataPan" v-show="showData" v-bind:class="{ active: showData }">
       <div class="item changzhu">
         <div class="title">
-          <h2>{{layerProp.county}}流出人口</h2>
+          <h2>{{layerProp.county}}县区迁出人口</h2>
         </div>
         <div class="content">
           <keep-alive>
@@ -69,7 +69,7 @@ export default {
       showData: false,
       isLiuchu: "liuchu_hj",
       liuchuDatas:{},
-      title: "流出人口（万人）",
+      title: "县区迁出人口（万人）",
       items: [
         {
           index: 1,

@@ -3,8 +3,8 @@ import { MessageBox, Message } from 'element-ui'
 // import qs from qs
 
 const service = axios.create({
-    // baseURL: 'https://zwfw.credit.gdgov.cn/yxjc/geo-api/', 
-    baseURL: 'http://localhost:8090/',
+    baseURL: 'https://zwfw.credit.gdgov.cn/yxjc/geo-api/', 
+    // baseURL: 'http://localhost:8090/',
     // timeout: 10000 // request timeout
 })
 

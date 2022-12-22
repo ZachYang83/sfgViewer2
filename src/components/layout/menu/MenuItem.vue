@@ -2,27 +2,13 @@
   <div class="menu">
     <!-- 根菜单 -->
     <router-link tag="span" :to="resolvePath()" v-if="!item.children">
-      <el-menu-item :index="resolvePath()">
+      <el-menu-item :index="resolvePath()" v-show="item.meta.show">
         <i :class="item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>
       </el-menu-item>
     </router-link>
 
     <!-- 可展开菜单 -->
-    <el-submenu :index="resolvePath()" v-else v-show="item.meta.show">
-      <template slot="title">
-        <i :class="item.meta.icon"></i>
-        <span slot="title">{{ item.meta.title }}</span>
-      </template>
-      <!-- 这里递归去展示多级菜单 -->
-      <menu-item
-        v-for="(route, index) in item.children"
-        :key="index"
-        :item="route"
-        :fatherPath="resolvePath(route.path)"
-      >
-      </menu-item>
-    </el-submenu>
   </div>
 </template>
 

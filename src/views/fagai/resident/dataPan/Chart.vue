@@ -43,7 +43,7 @@ export default {
       let bar_option = {
         title: {
           left: "center",
-          text: "各市"+ _this.datas.month.toString().slice(-2)  +"月常驻人口",
+          text: "各市"+ _this.datas.month.toString().slice(-2)  +"月县区常驻人口",
           textStyle: {
             color: "#BDBDBD",
           },
@@ -122,7 +122,7 @@ export default {
       let pie_option = {
         title: {
           left: "center",
-          text: _this.datas.county+"各月常驻人口",
+          text: _this.datas.county+"各月县区常驻人口",
           textStyle: {
             color: "#BDBDBD",
           },

@@ -88,7 +88,7 @@ export default {
     box-sizing: border-box;
     color: aliceblue;
     line-height: 30px;
-    font-size: 20px;
+    font-size: 14px;
     text-align: center;
   }
 

@@ -49,7 +49,7 @@ export default {
       let bar_option = {
         title: {
           left: "center",
-          text: "区县月度流入人口",
+          text: "区县月度县区迁入人口",
           textStyle: {
             color: "#BDBDBD",
           },

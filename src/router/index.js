@@ -9,8 +9,8 @@ const routes = [
   {
     path: '/',
     name: 'Default',
-    redirect: '/shangquan',
-    component:()=>import('@/views/fagai/business/Shangquan.vue'),
+    redirect: '/huoyun',
+    component:()=>import('@/views/fagai/huoyun/index.vue'),
   },
   {
     path: '/login',
@@ -34,17 +34,17 @@ const routes = [
       //   children:[
           {
             path:'/resident',
-            meta: { title: "常驻人口", icon: "el-icon-position" ,show:true},
+            meta: { title: "县区常驻人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/resident/Permanent.vue'),
           },
           {
             path:'/inflow',
-            meta: { title: "流入人口", icon: "el-icon-position" ,show:true},
+            meta: { title: "县区迁入人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/inflow/Liudong.vue'),
           },
           {
             path:'/outflow',
-            meta: { title: "流出人口", icon: "el-icon-position" ,show:true},
+            meta: { title: "县区迁出人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/outflow/Liudong.vue'),
           },
           {

@@ -12,7 +12,7 @@
     <div class="dataPan" v-show="showData" v-bind:class="{ active: showData }">
       <div class="item changzhu">
         <div class="title">
-          <h2>常驻人口</h2>
+          <h2>县区常驻人口</h2>
         </div>
         <div class="content">
           <keep-alive>
@@ -57,7 +57,7 @@ export default {
       changzhu: {},
       showData: false,
       isChangzhu: "Chart",
-      title: "常驻人口（万人）",
+      title: "县区常驻人口（万人）",
       items: [
         {
           index: 1,

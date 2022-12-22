@@ -1,5 +1,16 @@
 <template>
   <div id="map">
+    <div class="dropdown">
+      <el-select v-model="value" placeholder="请选择季度">
+        <el-option
+          v-for="item in timeOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
     <Legend
       :title="title"
       :items="items"
@@ -48,7 +59,7 @@ export default {
     return {
       showData: false,
       isChart: "Chart",
-      title: "货运量（万次）",
+      title: "货车流量（万次）",
       items: [
         {
           index: 6,
@@ -83,6 +94,13 @@ export default {
       ],
       chartData: {},
       desLonLats: [],
+      timeOptions:[
+        {
+          value:'choose1',
+          label:'2022年第四季度'
+        },
+      ],
+      value:'',
     };
   },
   components: {
@@ -215,9 +233,14 @@ export default {
 
         getCity("/shengfagai/huoyun/getCity", { city: city }).then((res) => {
           console.log(res.data.data[0]);
-          let pieData = [{value:props.truck,name:props.county},{value:(res.data.data[0].sum2/10000 - props.truck).toFixed(1),name:'其他'},
+          let pieData = [
+            { value: props.truck, name: props.county },
+            {
+              value: (res.data.data[0].sum2 / 10000 - props.truck).toFixed(1),
+              name: "其他",
+            },
           ];
-           _this.chartData.pie = pieData;
+          _this.chartData.pie = pieData;
         });
 
         getDesData("/shengfagai/huoyun/getDesData", {
@@ -254,6 +277,15 @@ export default {
   height: 100%;
   // height:calc(100% - 80px);
 }
+
+.dropdown {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 999;
+  width:150px;
+}
+
 .legend {
   width: 100%;
   height: calc(100% - 40px);

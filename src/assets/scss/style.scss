@@ -93,3 +93,12 @@ body {
 .el-table__body .el-table__row.hover-row td {
   background-color: rgba(121, 235, 187, 0.3) !important;
 }
+
+.el-popper{
+  left:50px !important;
+}
+
+.el-dropdown-menu__item{
+  width:150px !important;
+  margin-bottom: 0px !important;
+}
