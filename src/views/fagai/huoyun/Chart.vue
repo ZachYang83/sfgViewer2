@@ -44,7 +44,7 @@ export default {
       let bar_option = {
         title: {
           left: "center",
-          text: "货车流向TOP15（辆）",
+          text: "重载货车流向TOP15（辆）",
           textStyle: {
             color: "#BDBDBD",
           },
@@ -124,7 +124,7 @@ export default {
       let pie_option = {
         title: {
           left: "center",
-          text: "县区货车流量占全市货运比例",
+          text: "县区重载货车流量占全市货运比例",
           textStyle: {
             color: "#BDBDBD",
           },

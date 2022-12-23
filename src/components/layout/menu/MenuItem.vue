@@ -1,25 +1,13 @@
 <template>
   <div class="menu">
     <!-- 根菜单 -->
-<<<<<<< HEAD
-    <router-link tag="span" :to="resolvePath()" v-if="!item.children">
-      <el-menu-item :index="resolvePath()" v-show="item.meta.show">
+    <router-link tag="span" :to="resolvePath()">
+      <el-menu-item :index="resolvePath()" v-if="item.meta.show">
         <i :class="item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>
       </el-menu-item>
     </router-link>
 
-    <!-- 可展开菜单 -->
-=======
-    <router-link tag="span" :to="resolvePath()" v-if="item.meta.show">
-      <el-menu-item :index="resolvePath()">
-          <i :class="item.meta.icon"></i>
-          <span slot="title">{{ item.meta.title }}</span>
-      </el-menu-item>
-    </router-link>
-
- 
->>>>>>> c59e3e5dc910931722fee0fe33e0a6fc6948663f
   </div>
 </template>
 

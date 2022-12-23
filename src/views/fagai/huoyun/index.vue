@@ -59,7 +59,7 @@ export default {
     return {
       showData: false,
       isChart: "Chart",
-      title: "货车流量（万次）",
+      title: "重载货车流量（万次）",
       items: [
         {
           index: 6,

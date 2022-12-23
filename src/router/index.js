@@ -40,14 +40,14 @@ const routes = [
             component:()=>import('@/views/fagai/resident/Permanent.vue'),
           },
           {
-            path:'/inflow',
-            meta: { title: "县区迁入人口", icon: "el-icon-position" ,show:true},
-            component:()=>import('@/views/fagai/inflow/Liudong.vue'),
-          },
-          {
             path:'/outflow',
             meta: { title: "县区迁出人口", icon: "el-icon-position" ,show:true},
             component:()=>import('@/views/fagai/outflow/Liudong.vue'),
+          },
+          {
+            path:'/inflow',
+            meta: { title: "县区迁入人口", icon: "el-icon-position" ,show:true},
+            component:()=>import('@/views/fagai/inflow/Liudong.vue'),
           },
           {
             path:'/industry',
